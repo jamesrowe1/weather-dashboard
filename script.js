@@ -1,6 +1,7 @@
 //DOM Elements
 var cityHistoryEl = $("#history");
 var weatherCard = $("#weather");
+var futureWeatherCards = $("#futureWeather");
 //Initialize
 var cityHistory = [];
 var temperature;
@@ -8,6 +9,7 @@ var humidity;
 var windSpeed;
 var city;
 var icon;
+var futureWeather;
 
 //need some extras for uvIndex
 var lon;
@@ -25,7 +27,7 @@ $("#searchButton").on("click", function (event) {
     return;
   }
 
-  ajaxWeatherQuery(populatePage);
+  ajaxWeatherQuery(populateToday);
 
   cityHistoryEl.prepend("<li>" + city + "</li>");
 });
@@ -68,9 +70,20 @@ function ajaxWeatherQuery(popPage) {
       popPage();
     });
   });
+  var queryFutureURL =
+    "http://api.openweathermap.org/data/2.5/forecast?q=" +
+    city +
+    "&units=imperial&appid=5907a64e4c4cf40021f641c3ddf19281";
+  $.ajax({
+    url: queryFutureURL,
+    method: "GET",
+  }).then(function (futureResponse) {
+    console.log(futureResponse);
+    futureWeather = futureResponse;
+  });
 }
 
-function populatePage() {
+function populateToday() {
   weatherCard.empty();
   //create a card-body
   var cardBody = $("<div>");
@@ -118,4 +131,27 @@ function populatePage() {
   cardBody.append(uvIndexEl);
   //append card-body to card
   weatherCard.append(cardBody);
+
+  for (var i = 4; i <= 40; i = i + 8) {
+    populateFuture(i);
+  }
+}
+
+function populateFuture(day) {
+  //create cards for future
+  var dayPlus = $("<div>");
+  dayPlus.addClass("card");
+  dayPlus.attr("width", "20%");
+  var dayPlusDate = $("<div>");
+  dayPlusDate.addClass("card-title");
+  dayPlusDate.text(futureWeather.list[day].dt_txt.substr(0, 10));
+  dayPlus.append(dayPlusDate);
+  var dayPlusDate = $("<img>");
+  var dayPlusTemp = $("<p>");
+  dayPlusTemp.text(futureWeather.list[day].main.temp);
+  dayPlus.append(dayPlusTemp);
+  var dayPlusHumidity = $("<p>");
+
+  //append to page
+  futureWeatherCards.append(dayPlus);
 }
