@@ -7,7 +7,7 @@ var cityHistory = [];
 var temperature;
 var humidity;
 var windSpeed;
-var city;
+var city = "Hershey";
 var icon;
 var futureWeather;
 
@@ -19,6 +19,12 @@ var uvIndex;
 $("#searchButton").on("click", function (event) {
   event.preventDefault();
 
+  var cityHistoryCheck = JSON.parse(localStorage.getItem("cityHistory"));
+  if (cityHistoryCheck !== null) {
+    cityHistory = cityHistoryCheck;
+  } else {
+    cityHistory = [];
+  }
   //get the city input from the input box
   city = $("#cityInput").val();
   //city = "New York City";
@@ -29,9 +35,29 @@ $("#searchButton").on("click", function (event) {
 
   ajaxWeatherQuery(populateToday);
 
-  cityHistoryEl.prepend("<li>" + city + "</li>");
+  cityHistory.unshift(city);
+  createHistoryButtons();
+  localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
 });
 
+function createHistoryButtons() {
+  cityHistoryEl.empty();
+  for (var j = 0; j < cityHistory.length; j++) {
+    var newLI = $("<li>");
+    var newButton = $("<button>");
+    newButton.addClass("btn btn-secondary btn-history");
+    newButton.attr("data-city", cityHistory[j]);
+    newButton.text(cityHistory[j]);
+    newLI.append(newButton);
+    cityHistoryEl.prepend(newLI);
+  }
+}
+$(".btn-history").on("click", function (event) {
+  alert("works");
+  //   event.preventDefault();
+  //   city = $(this).data("city");
+  //   ajaxWeatherQuery(populateToday);
+});
 //use this to call ajax
 function ajaxWeatherQuery(popPage) {
   //get the weather info of the city
