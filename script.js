@@ -40,6 +40,7 @@ $("#searchButton").on("click", function (event) {
   localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
 });
 
+//create buttons of the history of the searches
 function createHistoryButtons() {
   cityHistoryEl.empty();
   for (var j = 0; j < cityHistory.length; j++) {
@@ -52,7 +53,7 @@ function createHistoryButtons() {
     cityHistoryEl.prepend(newLI);
   }
 }
-$(".btn-history").on("click", function (event) {
+$("document").on("click", ".btn-history", function (event) {
   alert("works");
   //   event.preventDefault();
   //   city = $(this).data("city");
