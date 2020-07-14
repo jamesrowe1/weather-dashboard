@@ -33,6 +33,7 @@ $("#searchButton").on("click", function (event) {
     return;
   }
 
+  //run to populate the weather info
   ajaxWeatherQuery(populateToday);
 
   cityHistory.unshift(city);
@@ -50,7 +51,7 @@ function createHistoryButtons() {
     newButton.attr("data-city", cityHistory[j]);
     newButton.text(cityHistory[j]);
     newLI.append(newButton);
-    cityHistoryEl.prepend(newLI);
+    cityHistoryEl.append(newLI);
   }
 }
 $(document).on("click", ".btn-history", function () {
@@ -196,3 +197,6 @@ function populateFuture(day) {
   //append to page
   futureWeatherCards.append(dayPlus);
 }
+
+//populate the weather with the default
+ajaxWeatherQuery(populateToday);
