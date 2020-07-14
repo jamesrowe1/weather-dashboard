@@ -20,8 +20,8 @@ $("#searchButton").on("click", function (event) {
   event.preventDefault();
 
   //get the city input from the input box
-  //   city = $("#cityInput").val();
-  city = "New York City";
+  city = $("#cityInput").val();
+  //city = "New York City";
   //check that something was input. If not, return
   if (city === "") {
     return;
@@ -132,25 +132,45 @@ function populateToday() {
   //append card-body to card
   weatherCard.append(cardBody);
 
+  //clear future cards what is already there
   for (var i = 4; i <= 40; i = i + 8) {
     populateFuture(i);
   }
 }
 
 function populateFuture(day) {
+  //clear on first run through
+  if (day === 4) {
+    futureWeatherCards.empty();
+  }
   //create cards for future
   var dayPlus = $("<div>");
   dayPlus.addClass("card");
   dayPlus.attr("width", "20%");
+
+  //the date is at the top
   var dayPlusDate = $("<div>");
   dayPlusDate.addClass("card-title");
   dayPlusDate.text(futureWeather.list[day].dt_txt.substr(0, 10));
   dayPlus.append(dayPlusDate);
-  var dayPlusDate = $("<img>");
+  //grabbing the icon to show
+  var dayPlusIcon = $("<img>");
+  var dayPlusIconVal = futureWeather.list[day].weather[0].icon;
+  var dayPlusIconUrl =
+    "http://openweathermap.org/img/w/" + dayPlusIconVal + ".png";
+  dayPlusIcon.attr("src", dayPlusIconUrl);
+  dayPlusIcon.attr("alt", "icon for future day");
+  dayPlus.append(dayPlusIcon);
+  //show the future date temp
   var dayPlusTemp = $("<p>");
-  dayPlusTemp.text(futureWeather.list[day].main.temp);
+  dayPlusTemp.text("Temperature: " + futureWeather.list[day].main.temp + "°F");
   dayPlus.append(dayPlusTemp);
+  //show the future date humidity
   var dayPlusHumidity = $("<p>");
+  dayPlusHumidity.text(
+    "Humidity: " + futureWeather.list[day].main.humidity + "%"
+  );
+  dayPlus.append(dayPlusHumidity);
 
   //append to page
   futureWeatherCards.append(dayPlus);
