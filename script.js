@@ -53,11 +53,10 @@ function createHistoryButtons() {
     cityHistoryEl.prepend(newLI);
   }
 }
-$("document").on("click", ".btn-history", function (event) {
-  alert("works");
-  //   event.preventDefault();
-  //   city = $(this).data("city");
-  //   ajaxWeatherQuery(populateToday);
+$(document).on("click", ".btn-history", function () {
+  event.preventDefault();
+  city = $(this).data("city");
+  ajaxWeatherQuery(populateToday);
 });
 //use this to call ajax
 function ajaxWeatherQuery(popPage) {
@@ -71,7 +70,6 @@ function ajaxWeatherQuery(popPage) {
     url: queryCityURL,
     method: "GET",
   }).then(function (response) {
-    console.log(response);
     //grab the info we just got
     temperature = response.main.temp;
     humidity = response.main.humidity;
@@ -91,7 +89,6 @@ function ajaxWeatherQuery(popPage) {
       url: queryUVURL,
       method: "GET",
     }).then(function (uvResponse) {
-      console.log(uvResponse);
       uvIndex = uvResponse.value;
       //calling populatePage here cause async is annoying
       popPage();
@@ -105,7 +102,6 @@ function ajaxWeatherQuery(popPage) {
     url: queryFutureURL,
     method: "GET",
   }).then(function (futureResponse) {
-    console.log(futureResponse);
     futureWeather = futureResponse;
   });
 }
@@ -133,14 +129,12 @@ function populateToday() {
   subtitleEl.addClass("card-subtitle");
   subtitleEl.text(moment().format("dddd, MMMM Do YYYY"));
   cardBody.append(subtitleEl);
-  console.log(cardBody);
   //create a p with temp
   var tempEl = $("<p>");
   tempEl.text("Temperature: " + temperature + "°F");
 
   //add temp to card
   cardBody.append(tempEl);
-  console.log(cardBody);
   //create a p with humidity
   var humidityEl = $("<p>");
   humidityEl.text("Humidity: " + humidity + "%");
