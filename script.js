@@ -64,7 +64,7 @@ function ajaxWeatherQuery(popPage) {
 
   //get the weather info of the city
   var queryCityURL =
-    "http://api.openweathermap.org/data/2.5/weather?q=" +
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&units=imperial&appid=5907a64e4c4cf40021f641c3ddf19281";
   //ajax to call the above URL for the city
@@ -83,7 +83,7 @@ function ajaxWeatherQuery(popPage) {
 
     //using lat and lon to get the UV index
     var queryUVURL =
-      "http://api.openweathermap.org/data/2.5/uvi?appid=5907a64e4c4cf40021f641c3ddf19281&lat=" +
+      "https://api.openweathermap.org/data/2.5/uvi?appid=5907a64e4c4cf40021f641c3ddf19281&lat=" +
       lat +
       "&lon=" +
       lon;
@@ -97,7 +97,7 @@ function ajaxWeatherQuery(popPage) {
     });
   });
   var queryFutureURL =
-    "http://api.openweathermap.org/data/2.5/forecast?q=" +
+    "https://api.openweathermap.org/data/2.5/forecast?q=" +
     city +
     "&units=imperial&appid=5907a64e4c4cf40021f641c3ddf19281";
   $.ajax({
@@ -119,7 +119,7 @@ function populateToday() {
   titleEl.text(city);
   //create the weather icon
   var iconEl = $("<img>");
-  var iconURL = "http://openweathermap.org/img/w/" + icon + ".png";
+  var iconURL = "https://openweathermap.org/img/w/" + icon + ".png";
   iconEl.attr("src", iconURL);
   iconEl.attr("alt", "icon of the weather");
   titleEl.append(iconEl);
@@ -180,7 +180,7 @@ function populateFuture(day) {
   var dayPlusIcon = $("<img>");
   var dayPlusIconVal = futureWeather.list[day].weather[0].icon;
   var dayPlusIconUrl =
-    "http://openweathermap.org/img/w/" + dayPlusIconVal + ".png";
+    "https://openweathermap.org/img/w/" + dayPlusIconVal + ".png";
   dayPlusIcon.attr("src", dayPlusIconUrl);
   dayPlusIcon.attr("alt", "icon for future day");
   dayPlus.append(dayPlusIcon);
