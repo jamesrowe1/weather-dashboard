@@ -64,7 +64,7 @@ function ajaxWeatherQuery(popPage) {
 
   //get the weather info of the city
   var queryCityURL =
-    "https://api.openweathermap.org/data/2.5/weather?q=" +
+    "http://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&units=imperial&appid=5907a64e4c4cf40021f641c3ddf19281";
   //ajax to call the above URL for the city
