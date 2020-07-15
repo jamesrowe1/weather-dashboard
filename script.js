@@ -19,12 +19,6 @@ var uvIndex;
 $("#searchButton").on("click", function (event) {
   event.preventDefault();
 
-  var cityHistoryCheck = JSON.parse(localStorage.getItem("cityHistory"));
-  if (cityHistoryCheck !== null) {
-    cityHistory = cityHistoryCheck;
-  } else {
-    cityHistory = [];
-  }
   //get the city input from the input box
   city = $("#cityInput").val();
   //city = "New York City";
@@ -61,6 +55,13 @@ $(document).on("click", ".btn-history", function () {
 });
 //use this to call ajax
 function ajaxWeatherQuery(popPage) {
+  var cityHistoryCheck = JSON.parse(localStorage.getItem("cityHistory"));
+  if (cityHistoryCheck !== null) {
+    cityHistory = cityHistoryCheck;
+  } else {
+    cityHistory = [];
+  }
+
   //get the weather info of the city
   var queryCityURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -167,7 +168,7 @@ function populateFuture(day) {
   }
   //create cards for future
   var dayPlus = $("<div>");
-  dayPlus.addClass("card");
+  dayPlus.addClass("card card-forecast");
   dayPlus.attr("width", "20%");
 
   //the date is at the top
@@ -200,3 +201,4 @@ function populateFuture(day) {
 
 //populate the weather with the default
 ajaxWeatherQuery(populateToday);
+createHistoryButtons();
