@@ -10,7 +10,7 @@ https://jamesrowe1.github.io/weather-dashboard
 
 ## Screenshot
 
-![weather-dashboard](Assets/weatherdash.jpg)
+![weather-dashboard](Assets/weather-dash.jpg)
 
 ## Getting Started
 
