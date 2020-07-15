@@ -73,7 +73,7 @@ function ajaxWeatherQuery(popPage) {
     method: "GET",
   }).then(function (response) {
     //grab the info we just got
-    temperature = response.main.temp;
+    temperature = Math.round(response.main.temp);
     humidity = response.main.humidity;
     windSpeed = response.wind.speed;
     icon = response.weather[0].icon;
@@ -186,7 +186,9 @@ function populateFuture(day) {
   dayPlus.append(dayPlusIcon);
   //show the future date temp
   var dayPlusTemp = $("<p>");
-  dayPlusTemp.text("Temperature: " + futureWeather.list[day].main.temp + "°F");
+  dayPlusTemp.text(
+    "Temperature: " + Math.round(futureWeather.list[day].main.temp) + "°F"
+  );
   dayPlus.append(dayPlusTemp);
   //show the future date humidity
   var dayPlusHumidity = $("<p>");
