@@ -149,7 +149,20 @@ function populateToday() {
   cardBody.append(windSpeedEl);
   //create a p with uv index
   var uvIndexEl = $("<p>");
+  console.log(uvIndex);
   uvIndexEl.text("UV Index: " + uvIndex);
+  //set color according to danger level
+  if (uvIndex <= 2) {
+    uvIndexEl.css("background-color", "green");
+  } else if (uvIndex <= 5) {
+    uvIndexEl.css("background-color", "yellow");
+  } else if (uvIndex <= 7) {
+    uvIndexEl.css("background-color", "orange");
+  } else {
+    uvIndexEl.css("background-color", "red");
+  }
+  uvIndexEl.css("color", "white");
+  uvIndexEl.css("width", "120px");
   //add uv index to card
   cardBody.append(uvIndexEl);
   //append card-body to card
@@ -200,7 +213,14 @@ function populateFuture(day) {
   //append to page
   futureWeatherCards.append(dayPlus);
 }
+function loadPage() {
+  var cityHistoryCheck = JSON.parse(localStorage.getItem("cityHistory"));
+  if (cityHistoryCheck !== null) {
+    city = cityHistoryCheck[0];
+  }
+}
 
 //populate the weather with the default
+loadPage();
 ajaxWeatherQuery(populateToday);
 createHistoryButtons();
